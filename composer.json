@@ -1,13 +1,24 @@
 {
-    "name": "ingniq/blockchain-test-task",
-    "description": "A very primitive model of blockchain currency, just like Bitcoin, but with many simplifications.",
-    "type": "project",
-    "license": "LGPL-3.0",
-    "authors": [
-        {
-            "name": "Igor Filatov",
-            "email": "ingniq8@gmail.com"
-        }
-    ],
-    "require": {}
+  "name": "ingniq/blockchain-test-task",
+  "description": "A very primitive model of blockchain currency, just like Bitcoin, but with many simplifications.",
+  "type": "project",
+  "license": "LGPL-3.0",
+  "authors": [
+    {
+      "name": "Igor Filatov",
+      "email": "ingniq8@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "3.7.*",
+    "phpdocumentor/phpdocumentor": "2.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ingniq\\BlockchainTestTask\\": "src/Blockchain"
+    }
+  }
 }
