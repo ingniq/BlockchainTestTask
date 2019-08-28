@@ -1,0 +1,13 @@
+{
+    "name": "ingniq/blockchain-test-task",
+    "description": "A very primitive model of blockchain currency, just like Bitcoin, but with many simplifications.",
+    "type": "project",
+    "license": "LGPL-3.0",
+    "authors": [
+        {
+            "name": "Igor Filatov",
+            "email": "ingniq8@gmail.com"
+        }
+    ],
+    "require": {}
+}
