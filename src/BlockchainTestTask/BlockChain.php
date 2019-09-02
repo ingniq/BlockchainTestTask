@@ -49,11 +49,11 @@ class BlockChain
     public function validateBlock(Block $block)
     {
         $transactions = $block->getTransactions();
-        //the block has at least 1 transaction
+        //The block must have at least one transaction.
         if (empty($transactions)) {
             return false;
         }
-        //the block with the same id doesn’t exist in the “Block Tree” yet
+        //A block with the same id should not exist yet.
         if ($this->blockTree->getNode($block->getId())) {
             return false;
         }
