@@ -54,7 +54,7 @@ class BlockChain
             return false;
         }
         //the block with the same id doesn’t exist in the “Block Tree” yet
-        if (!$this->blockTree->getNode($block->getId())) {
+        if ($this->blockTree->getNode($block->getId())) {
             return false;
         }
 
@@ -72,7 +72,7 @@ class BlockChain
     public function addBlock($parentId, Block $block)
     {
         //validate the block
-        if ($this->validateBlock($block)) {
+        if (!$this->validateBlock($block)) {
             return;
         }
         //there can be only one root block
