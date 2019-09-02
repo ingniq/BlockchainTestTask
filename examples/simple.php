@@ -56,7 +56,6 @@ try {
     $block->addTransaction($trx);
 
     $blockChain->addBlock(1, $block);
-    $chain = $blockChain->getBlockChain();
 
     echo 'Alice: ' . $blockChain->getBalance('alice') . "\n";
     echo 'Bob: ' . $blockChain->getBalance('bob') . "\n";
