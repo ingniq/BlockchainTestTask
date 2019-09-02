@@ -8,4 +8,4 @@ This is a very primitive model of blockchain currency, just like Bitcoin, but wi
 - **Block Chain** – the longest chain of Block objects within a Block Tree.
  
 ### Typical Workflow
-A typical workflow can be seen in the file: *[examples/simple.php]()*
+A typical workflow can be seen in the file: *[examples/simple.php](examples/simple.php)*
