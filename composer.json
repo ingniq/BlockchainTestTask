@@ -1,5 +1,5 @@
 {
-  "name": "ingniq/blockchain-test-task",
+  "name": "ingniq/BlockchainTestTask",
   "description": "A very primitive model of blockchain currency, just like Bitcoin, but with many simplifications.",
   "type": "project",
   "license": "LGPL-3.0",
@@ -18,7 +18,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Ingniq\\BlockchainTestTask\\": "src/Blockchain"
+      "Ingniq\\BlockchainTestTask\\": "src/BlockchainTestTask"
     }
   }
 }
