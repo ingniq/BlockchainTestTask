@@ -35,11 +35,22 @@ class BlockTreeNode
      * @param int   $parentId
      * @param Block $block
      */
-    public function __construct($parentId, $block)
+    private function __construct($parentId, $block)
     {
         $this->parentId = $parentId;
         $this->block    = $block;
         $this->level    = 0;
+    }
+
+    /**
+     * BlockTreeNode static method-factory.
+     *
+     * @param int   $parentId
+     * @param Block $block
+     */
+    public static function createByParameters(int $parentId, Block $block)
+    {
+        return new self($parentId, $block);
     }
 
     /**

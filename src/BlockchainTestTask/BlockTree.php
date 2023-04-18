@@ -134,7 +134,7 @@ class BlockTree
      */
     private function addNode($parentId, Block $block)
     {
-        $node = new BlockTreeNode($parentId, $block);
+        $node = BlockTreeNode::createByParameters($parentId, $block);
 
         if (null === $parentId) {
             //Adding a root node with level 0.
