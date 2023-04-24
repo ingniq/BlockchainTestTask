@@ -30,7 +30,7 @@ class Account
      * @return mixed
      * @throws Exception
      */
-    static public function getAccount($name)
+    static public function getAccount(string $name)
     {
         $name = strtolower($name);
         if (!isset(self::$accounts[$name])) {

@@ -90,7 +90,7 @@ class Transaction
      * @param int $id
      * @return void
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
     }
@@ -112,7 +112,7 @@ class Transaction
      * @return void
      * @throws Exception
      */
-    public function setType($type)
+    public function setType(int $type)
     {
         if (!in_array($type, $this->types)) {
             throw new Exception('An unsupported transaction type.');
@@ -141,17 +141,15 @@ class Transaction
      * @return void
      * @throws Exception
      */
-    public function setFrom($from)
+    public function setFrom(string $from)
     {
-        //if passed “from” account is null.
-        if (is_null($from)) {
-            throw new Exception('The "from" property cannot be null.');
-        }
         //if passed “from” account is  shorter than 2 characters or longer than 10 characters.
         $length = strlen($from);
+
         if ($length < 2 || $length > 10) {
             throw new Exception('The length of the "from" property is not in a valid range.');
         }
+
         //if transaction “type” is “emission” – ignore the passed “from” value and set “from” property to null.
         if ($this->getType() == self::TYPE_EMISSION) {
             $this->from = null;
@@ -177,18 +175,16 @@ class Transaction
      * @return void
      * @throws Exception
      */
-    public function setTo($to)
+    public function setTo(string $to)
     {
         //if “to” account is the same as the “from” account
         if ($to == $this->from) {
             throw new Exception('The "from" and "to" properties must not be the same.');
         }
-        //if passed “to” account is null.
-        if (is_null($to)) {
-            throw new Exception('The "to" property cannot be null.');
-        }
+
         //if passed “to” account is  shorter than 2 characters or longer than 10 characters.
         $length = strlen($to);
+
         if ($length < 2 || $length > 10) {
             throw new Exception('The length of the "to" property is not in a valid range.');
         }
@@ -213,7 +209,7 @@ class Transaction
      * @return void
      * @throws Exception
      */
-    public function setAmount($amount)
+    public function setAmount(int $amount)
     {
         //if amount is less than zero
         if (0 > $amount) {
@@ -240,7 +236,7 @@ class Transaction
      * @return void
      * @throws Exception
      */
-    public function setSignature($signature)
+    public function setSignature(string $signature)
     {
         //if passed signature’s length is not equal to 32 characters
         if (1 !== preg_match('/^[a-f0-9]{32}$/', $signature)) {

@@ -35,7 +35,7 @@ class BlockTreeNode
      * @param int   $parentId
      * @param Block $block
      */
-    private function __construct($parentId, $block)
+    private function __construct(int $parentId, Block $block)
     {
         $this->parentId = $parentId;
         $this->block    = $block;
@@ -79,7 +79,7 @@ class BlockTreeNode
      * @param int $level
      * @return void
      */
-    public function setLevel($level)
+    public function setLevel(int $level)
     {
         $this->level = $level;
     }

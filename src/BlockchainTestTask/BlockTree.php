@@ -110,7 +110,7 @@ class BlockTree
      * @return void
      * @throws Exception
      */
-    public function addBlock($parentId, Block $block)
+    public function addBlock(?int $parentId, Block $block)
     {
         //There can be only 1 tree root.
         if (null === $parentId && $this->getRoot()) {
@@ -128,11 +128,11 @@ class BlockTree
     /**
      * Creating new tree node.
      *
-     * @param int   $parentId
+     * @param int|null   $parentId
      * @param Block $block
      * @return void
      */
-    private function addNode($parentId, Block $block)
+    private function addNode(?int $parentId, Block $block)
     {
         $node = BlockTreeNode::createByParameters($parentId, $block);
 
@@ -167,7 +167,7 @@ class BlockTree
      * @param int $blockId
      * @return void
      */
-    private function updatingTree($parentId, $blockId)
+    private function updatingTree(int $parentId, int $blockId)
     {
         $this->treemap[$parentId][] = $blockId;
     }

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 $vendorDirPath = realpath(__DIR__ . '/vendor');
 if (file_exists($vendorDirPath . '/autoload.php')) {
     require $vendorDirPath . '/autoload.php';

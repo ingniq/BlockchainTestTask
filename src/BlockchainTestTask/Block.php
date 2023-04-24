@@ -69,7 +69,7 @@ class Block
      * @param Transaction $transaction
      * @return boolean
      */
-    public function validateTransaction($transaction)
+    public function validateTransaction(Transaction $transaction)
     {
         /**
          * In order to calculate the signature, this should convert all properties(id, type, from, to, amount) to strings,
@@ -97,15 +97,17 @@ class Block
      * @param Transaction $transaction
      * @return void
      */
-    public function addTransaction($transaction)
+    public function addTransaction(Transaction $transaction)
     {
         if (!$this->validateTransaction($transaction)) {
             return;
         }
+
         //check if the number of existing transactions in block is less than 10
         if (count($this->transactions) >= 10) {
             return;
         }
+
         //check if transaction with transaction.id doesn’t already exist in the list of transactions in this block
         if (isset($this->transactions[$transaction->getId()])) {
             return;

@@ -64,12 +64,12 @@ class BlockChain
     /**
      * Adding block to the “Block Tree”.
      *
-     * @param int   $parentId
+     * @param int|null   $parentId
      * @param Block $block
      * @return void
      * @throws Exception
      */
-    public function addBlock($parentId, Block $block)
+    public function addBlock(?int $parentId, Block $block)
     {
         //validate the block
         if (!$this->validateBlock($block)) {
@@ -122,12 +122,8 @@ class BlockChain
      * @return int
      * @throws Exception
      */
-    public function getBalance($accountName)
+    public function getBalance(string $accountName)
     {
-        //if the “account” is null
-        if (is_null($accountName)) {
-            throw new Exception('The "account" property must not be null.');
-        }
         //if the “account” is shorter than 2 characters or longer than 100 characters
         $length = strlen($accountName);
         if ($length < 2 || $length > 10) {
@@ -136,15 +132,18 @@ class BlockChain
 
         $accountName = strtolower($accountName);
         $account     = Account::getAccount($accountName);
+
         /** @var BlockTreeNode $node */
         foreach ($this->getBlockChain() as $node) {
             $transactions = $node->getBlock()->getTransactions();
+
             /** @var Transaction $transaction */
             foreach ($transactions as $transaction) {
                 //Increases the balance of those accounts whose name is specified in the "to" parameter of the transaction.
                 if ($transaction->getTo() === $accountName) {
                     $account['balance'] += $transaction->getAmount();
                 }
+
                 //Decreases the balance of those accounts whose name is specified in the "from" parameter of the transaction.
                 if ($transaction->getFrom() === $accountName) {
                     $account['balance'] -= $transaction->getAmount();
