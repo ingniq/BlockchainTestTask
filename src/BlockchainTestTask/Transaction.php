@@ -25,6 +25,21 @@ class Transaction
     const TYPE_TRANSFER = 1;
 
     /**
+     * Maximum number of characters in the account name.
+     */
+    const ACCOUNT_LENGTH_MIN = 2;
+
+    /**
+     * Minimum number of characters in the account name.
+     */
+    const ACCOUNT_LENGTH_MAX = 10;
+
+    /**
+     * Signature string pattern.
+     */
+    const SIGNATURE_PATTERN = '/^[a-f0-9]{32}$/';
+
+    /**
      * Unique transaction id.
      *
      * @var int
@@ -146,7 +161,7 @@ class Transaction
         //if passed “from” account is  shorter than 2 characters or longer than 10 characters.
         $length = strlen($from);
 
-        if ($length < 2 || $length > 10) {
+        if ($length < self::ACCOUNT_LENGTH_MIN || $length > self::ACCOUNT_LENGTH_MAX) {
             throw new Exception('The length of the "from" property is not in a valid range.');
         }
 
@@ -182,10 +197,10 @@ class Transaction
             throw new Exception('The "from" and "to" properties must not be the same.');
         }
 
-        //if passed “to” account is  shorter than 2 characters or longer than 10 characters.
+        //if passed “to” account is shorter than 2 characters or longer than 10 characters.
         $length = strlen($to);
 
-        if ($length < 2 || $length > 10) {
+        if ($length < self::ACCOUNT_LENGTH_MIN || $length > self::ACCOUNT_LENGTH_MAX) {
             throw new Exception('The length of the "to" property is not in a valid range.');
         }
 
@@ -239,7 +254,7 @@ class Transaction
     public function setSignature(string $signature)
     {
         //if passed signature’s length is not equal to 32 characters
-        if (1 !== preg_match('/^[a-f0-9]{32}$/', $signature)) {
+        if (1 !== preg_match(self::SIGNATURE_PATTERN, $signature)) {
             throw new Exception('Signature incorrect.');
         }
 

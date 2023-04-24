@@ -10,6 +10,11 @@ namespace Ingniq\BlockchainTestTask;
 class Block
 {
     /**
+     * Maximum number of existing transactions in a block.
+     */
+    const TRANSACTION_LIMIT_IN_BLOCK = 10;
+
+    /**
      * Unique block id
      *
      * @var int
@@ -76,11 +81,11 @@ class Block
          * and concatenate them using a semicolon (“:”) character.
          */
         $componentsSignature = array(
-            $transaction->getId(),
-            $transaction->getType(),
+            (string) $transaction->getId(),
+            (string) $transaction->getType(),
             $transaction->getFrom(),
             $transaction->getTo(),
-            $transaction->getAmount(),
+            (string) $transaction->getAmount(),
         );
 
         $signature = MD5(implode(':', $componentsSignature));
@@ -104,7 +109,7 @@ class Block
         }
 
         //check if the number of existing transactions in block is less than 10
-        if (count($this->transactions) >= 10) {
+        if (count($this->transactions) >= self::TRANSACTION_LIMIT_IN_BLOCK) {
             return;
         }
 
