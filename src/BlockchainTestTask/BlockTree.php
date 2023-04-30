@@ -203,7 +203,7 @@ class BlockTree
             if (!empty($this->treemap[$itemId])) {
                 //Push all child vertices not visited on the stack.
                 foreach ($this->treemap[$itemId] as $blockId) {
-                    if (!$visited[$itemId][$blockId]) {
+                    if (empty($visited[$blockId])) {
                         $stackIds->push($blockId);
                         $visited[$blockId] = true;
                     }
