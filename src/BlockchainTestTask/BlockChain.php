@@ -71,18 +71,20 @@ class BlockChain
      */
     public function addBlock(?int $parentId, Block $block)
     {
-        //validate the block
         if (!$this->validateBlock($block)) {
             return;
         }
+
         //there can be only one root block
         if (is_null($parentId) && !is_null($this->blockTree->getRoot())) {
             return;
         }
+
         //parentBlockId refers to a block that doesn’t exist in the “Block Tree”
         if (!is_null($parentId) && !$this->blockTree->getNode($parentId)) {
             return;
         }
+
         //Adding a "block" to an existing "parent Block Id" should not result in a negative balance on some accounts.
         if (!$this->validateAmount($block)) {
             return;
@@ -124,7 +126,6 @@ class BlockChain
      */
     public function getBalance(string $accountName)
     {
-        //if the “account” is shorter than 2 characters or longer than 100 characters
         $length = strlen($accountName);
         if ($length < 2 || $length > 10) {
             throw new Exception('The length of the "account" property is not in a valid range.');
@@ -139,12 +140,10 @@ class BlockChain
 
             /** @var Transaction $transaction */
             foreach ($transactions as $transaction) {
-                //Increases the balance of those accounts whose name is specified in the "to" parameter of the transaction.
                 if ($transaction->getTo() === $accountName) {
                     $account['balance'] += $transaction->getAmount();
                 }
 
-                //Decreases the balance of those accounts whose name is specified in the "from" parameter of the transaction.
                 if ($transaction->getFrom() === $accountName) {
                     $account['balance'] -= $transaction->getAmount();
                 }

@@ -80,13 +80,11 @@ class BlockTree
      */
     public function getLongestChain()
     {
-        //Initialization double linked list.
         $chain = new SplDoublyLinkedList();
 
-        //Set mode 'IT_MODE_LIFO' (The list will be iterated in a last in, first out order, like a stack).
+        //The list will be iterated in a last in, first out order, like a stack.
         $chain->setIteratorMode(SplDoublyLinkedList::IT_MODE_LIFO);
 
-        //Building a chain from the lowest node to the root node.
         $node = $this->getLowerNode();
         $chain->push($node);
 
@@ -137,24 +135,16 @@ class BlockTree
         $node = BlockTreeNode::createByParameters($parentId, $block);
 
         if (null === $parentId) {
-            //Adding a root node with level 0.
             $this->root = $node;
             $node->setLevel(0);
         } else {
-            //Adding a node.
             $parentNode = $this->getNode($parentId);
             $node->setLevel($parentNode->getLevel() + 1);
         }
 
-        //Setting the depth of the tree.
-        if ($this->depth < $node->getLevel()) {
-            $this->depth = $node->getLevel();
-        }
-
-        //Adding a node to the node list.
+        $this->depth = $node->getLevel();
         $this->nodes[$block->getId()] = $node;
 
-        //Updating tree map.
         if (null !== $parentId) {
             $this->updatingTree($parentId, $block->getId());
         }
@@ -183,28 +173,26 @@ class BlockTree
         if (!$this->getRoot()) {
             throw new Exception("The blocks tree is not built.");
         }
-        $rootId = $this->getRoot()->getBlock()->getId();
 
-        //Initialization the stack.
-        $stackIds = new SplStack();
+        $rootBlockId = $this->getRoot()->getBlock()->getId();
+        $blocksForProcessingStack = new SplStack();
 
         //Start at the root.
-        $stackIds->push($rootId);
+        $blocksForProcessingStack->push($rootBlockId);
 
         //Mark on the visit.
         $visited          = array();
-        $visited[$rootId] = true;
+        $visited[$rootBlockId] = true;
 
         //Handling a non-empty stack. Last in, first out. Until we get to the lowest node.
-        while (!$stackIds->isEmpty() && $this->nodes[$stackIds->top()]->getLevel() != $this->depth) {
-            //Taking a vertex from the stack.
-            $itemId = $stackIds->pop();
+        while (!$blocksForProcessingStack->isEmpty() && $this->nodes[$blocksForProcessingStack->top()]->getLevel() != $this->depth) {
+            $parentBlockId = $blocksForProcessingStack->pop();
 
-            if (!empty($this->treemap[$itemId])) {
+            if (!empty($this->treemap[$parentBlockId])) {
                 //Push all child vertices not visited on the stack.
-                foreach ($this->treemap[$itemId] as $blockId) {
+                foreach ($this->treemap[$parentBlockId] as $blockId) {
                     if (empty($visited[$blockId])) {
-                        $stackIds->push($blockId);
+                        $blocksForProcessingStack->push($blockId);
                         $visited[$blockId] = true;
                     }
                 }
@@ -212,6 +200,6 @@ class BlockTree
         }
 
         //Return lower node.
-        return $this->nodes[$stackIds->pop()];
+        return $this->nodes[$blocksForProcessingStack->pop()];
     }
 }

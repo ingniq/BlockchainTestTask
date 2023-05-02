@@ -76,10 +76,6 @@ class Block
      */
     public function validateTransaction(Transaction $transaction)
     {
-        /**
-         * In order to calculate the signature, this should convert all properties(id, type, from, to, amount) to strings,
-         * and concatenate them using a semicolon (“:”) character.
-         */
         $componentsSignature = array(
             (string) $transaction->getId(),
             (string) $transaction->getType(),
@@ -108,12 +104,10 @@ class Block
             return;
         }
 
-        //check if the number of existing transactions in block is less than 10
         if (count($this->transactions) >= self::TRANSACTION_LIMIT_IN_BLOCK) {
             return;
         }
 
-        //check if transaction with transaction.id doesn’t already exist in the list of transactions in this block
         if (isset($this->transactions[$transaction->getId()])) {
             return;
         }

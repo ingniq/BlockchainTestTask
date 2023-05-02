@@ -132,6 +132,8 @@ class Transaction
         if (!in_array($type, $this->types)) {
             throw new Exception('An unsupported transaction type.');
         }
+
+        // To create new coins, the from field is not needed
         if ($type == self::TYPE_EMISSION) {
             $this->from = null;
         }
@@ -158,19 +160,18 @@ class Transaction
      */
     public function setFrom(string $from)
     {
-        //if passed “from” account is  shorter than 2 characters or longer than 10 characters.
         $length = strlen($from);
 
         if ($length < self::ACCOUNT_LENGTH_MIN || $length > self::ACCOUNT_LENGTH_MAX) {
             throw new Exception('The length of the "from" property is not in a valid range.');
         }
 
-        //if transaction “type” is “emission” – ignore the passed “from” value and set “from” property to null.
+        // To create new coins, the from field is not needed
         if ($this->getType() == self::TYPE_EMISSION) {
             $this->from = null;
+        } else {
+            $this->from = strtolower($from);
         }
-
-        $this->from = strtolower($from);
     }
 
     /**
@@ -192,12 +193,10 @@ class Transaction
      */
     public function setTo(string $to)
     {
-        //if “to” account is the same as the “from” account
         if ($to == $this->from) {
             throw new Exception('The "from" and "to" properties must not be the same.');
         }
 
-        //if passed “to” account is shorter than 2 characters or longer than 10 characters.
         $length = strlen($to);
 
         if ($length < self::ACCOUNT_LENGTH_MIN || $length > self::ACCOUNT_LENGTH_MAX) {
@@ -226,7 +225,6 @@ class Transaction
      */
     public function setAmount(int $amount)
     {
-        //if amount is less than zero
         if (0 > $amount) {
             throw new Exception('The amount should not be less than zero.');
         }
@@ -253,12 +251,10 @@ class Transaction
      */
     public function setSignature(string $signature)
     {
-        //if passed signature’s length is not equal to 32 characters
         if (1 !== preg_match(self::SIGNATURE_PATTERN, $signature)) {
             throw new Exception('Signature incorrect.');
         }
 
         $this->signature = $signature;
     }
-
 }
