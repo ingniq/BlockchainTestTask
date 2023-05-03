@@ -251,6 +251,7 @@ class Transaction
      */
     public function setSignature(string $signature)
     {
+        // The signature must contain 32 lowercase letters or numbers
         if (1 !== preg_match(self::SIGNATURE_PATTERN, $signature)) {
             throw new Exception('Signature incorrect.');
         }

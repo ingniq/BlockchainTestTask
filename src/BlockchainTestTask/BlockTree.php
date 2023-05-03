@@ -95,6 +95,7 @@ class BlockTree
             $chain->push($node);
         }
 
+        // A chain of nodes from the root to the lowest node in the block tree.
         return $chain;
     }
 
@@ -132,6 +133,7 @@ class BlockTree
      */
     private function addNode(?int $parentId, Block $block)
     {
+        // If $parentId is null, then it means insertion into the root of the tree.
         $node = BlockTreeNode::createByParameters($parentId, $block);
 
         if (null === $parentId) {
@@ -170,6 +172,7 @@ class BlockTree
      */
     public function getLowerNode()
     {
+        // TODO: Check the optimality and correctness of the implementation of the selected algorithm
         if (!$this->getRoot()) {
             throw new Exception("The blocks tree is not built.");
         }
@@ -181,7 +184,7 @@ class BlockTree
         $blocksForProcessingStack->push($rootBlockId);
 
         //Mark on the visit.
-        $visited          = array();
+        $visited          = array();  // TODO: сheck whether to use this variable
         $visited[$rootBlockId] = true;
 
         //Handling a non-empty stack. Last in, first out. Until we get to the lowest node.
